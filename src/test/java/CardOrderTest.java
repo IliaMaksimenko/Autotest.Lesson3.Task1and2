@@ -1,3 +1,4 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,7 +13,8 @@ public class CardOrderTest {
     @Test
     public void shouldReceiveSuccessMessage() {
 
-        System.setProperty("webdriver.chrome.driver", "D:\\Java\\WebDriverChromium\\chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
+//        System.setProperty("webdriver.chrome.driver", "D:\\Java\\WebDriverChromium\\chromedriver.exe");
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-dev-shm-usage");
