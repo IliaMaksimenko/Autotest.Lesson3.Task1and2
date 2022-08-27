@@ -1,20 +1,24 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class CardOrderTest {
 
     private WebDriver driver;
 
-    @Test
-    public void shouldReceiveSuccessMessage() {
+
+    @BeforeEach
+    public void setup(){
 
         WebDriverManager.chromedriver().setup();
-//        System.setProperty("webdriver.chrome.driver", "D:\\Java\\WebDriverChromium\\chromedriver.exe");
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-dev-shm-usage");
@@ -25,6 +29,18 @@ public class CardOrderTest {
         driver.get("http://localhost:9999");
         driver.manage().window().maximize();
 
+    }
+
+    @AfterEach
+    public void tearDown(){
+
+        driver.quit();
+
+    }
+
+    @Test
+    public void shouldReceiveSuccessMessage() {
+
         driver.findElement(By.xpath("//input[@name='name']")).sendKeys("Иванов Иван");
         driver.findElement(By.xpath("//input[@name='phone']")).sendKeys("+79111111111");
         driver.findElement(By.className("checkbox__box")).click();
@@ -33,7 +49,26 @@ public class CardOrderTest {
         String expected = "  Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
         String actual = driver.findElement(By.cssSelector("#root > div > div > p")).getText();
 
-        driver.quit();
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldCheckValidation() {
+
+        driver.findElement(By.xpath("//input[@name='name']")).sendKeys("Ivanov Ivan");
+        driver.findElement(By.className("button__content")).click();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        String expected = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
+        String actual = driver.findElement(By.cssSelector("#root > div > form > div:nth-child(1) > span > span > span.input__sub")).getText();
+
+        assertEquals(expected, actual);
 
     }
 }
