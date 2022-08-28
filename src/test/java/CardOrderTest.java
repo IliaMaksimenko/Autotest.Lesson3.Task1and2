@@ -16,7 +16,7 @@ public class CardOrderTest {
 
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
 
         WebDriverManager.chromedriver().setup();
 
@@ -32,7 +32,7 @@ public class CardOrderTest {
     }
 
     @AfterEach
-    public void tearDown(){
+    public void tearDown() {
 
         driver.quit();
 
@@ -63,7 +63,7 @@ public class CardOrderTest {
 
         String expected = "Поле обязательно для заполнения";
 
-        assertEquals(expected,driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText());
+        assertEquals(expected, driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText());
 
     }
 
@@ -78,7 +78,7 @@ public class CardOrderTest {
 
         String expected = "Поле обязательно для заполнения";
 
-        assertEquals(expected,driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText());
+        assertEquals(expected, driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText());
 
     }
 
@@ -93,7 +93,7 @@ public class CardOrderTest {
 
         String expected = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
 
-        assertEquals(expected,driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText());
+        assertEquals(expected, driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText());
 
     }
 
@@ -108,7 +108,7 @@ public class CardOrderTest {
 
         String expected = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
 
-        assertEquals(expected,driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText());
+        assertEquals(expected, driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText());
 
     }
 
